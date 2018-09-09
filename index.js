@@ -5,6 +5,8 @@ const bme680 = new Bme680(1, 0x77);
 const { Pool } = require('pg');
 
 const pool = new Pool({
+	host: 'localhost',
+	database: 'bme',
 	user: 'bmewriter',
 	password: 'password',
 });
