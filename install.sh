@@ -33,6 +33,9 @@ sudo -u postgres psql -U postgres -c "CREATE database tutorial;"
 sudo -u postgres psql -U postgres -d tutorial -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
 
 
+sudo -u postgres psql -U postgres -d tutorial -c "CREATE USER bmewriter WITH PASSWORD 'password'; GRANT CONNECT ON DATABASE bme TO bmewriter; GRANT INSERT ON ALL TABLES IN SCHEMA public TO bmewriter"
+
+
 CREATE TABLE conditions (
   time        TIMESTAMPTZ       NOT NULL,
   uptime    TEXT              NOT NULL,

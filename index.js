@@ -4,7 +4,10 @@ const { Bme680 } = require('bme680-sensor');
 const bme680 = new Bme680(1, 0x77);
 const { Pool } = require('pg');
 
-const pool = new Pool();
+const pool = new Pool({
+	user: 'bmewriter',
+	password: 'password',
+});
 bme680.initialize().then(async () => {
     console.info('Sensor initialized');
     setInterval(async () => {
