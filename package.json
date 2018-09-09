@@ -1,0 +1,23 @@
+{
+  "name": "bmeraspberry",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "pg": "^7.4.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bornskilled200/bmeraspberry.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bornskilled200/bmeraspberry/issues"
+  },
+  "homepage": "https://github.com/bornskilled200/bmeraspberry#readme"
+}
