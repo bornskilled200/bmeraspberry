@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "pg": "^7.4.3"
+    "sqlite": "^3.0.0",
+    "sqlite3": "^4.0.2"
   },
   "devDependencies": {},
   "scripts": {
