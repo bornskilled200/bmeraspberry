@@ -29,11 +29,12 @@ read -p "postgres password: " password
 
 sudo -u postgres psql -U postgres -d postgres -c "alter user postgres with password '$password';"
 
-sudo -u postgres psql -U postgres -c "CREATE database tutorial;"
-sudo -u postgres psql -U postgres -d tutorial -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
+sudo -u postgres psql -U postgres -c "CREATE database bme;"
+sudo -u postgres psql -U postgres -d bme -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
 
 
-sudo -u postgres psql -U postgres -d tutorial -c "CREATE USER bmewriter WITH PASSWORD 'password'; GRANT CONNECT ON DATABASE bme TO bmewriter; GRANT INSERT ON ALL TABLES IN SCHEMA public TO bmewriter"
+sudo -u postgres psql -U postgres -d bme -c "CREATE USER bmewriter WITH PASSWORD 'password'; GRANT CONNECT ON DATABASE bme TO bmewriter; GRANT INSERT ON ALL TABLES IN SCHEMA public TO bmewriter"
+sudo -u postgres psql -U postgres -d bme -c "CREATE USER grafanareader WITH PASSWORD 'password'; GRANT CONNECT ON DATABASE bme TO grafanareader; GRANT SELECT ON ALL TABLES IN SCHEMA public TO grafanareader"
 
 
 CREATE TABLE conditions (
