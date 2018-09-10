@@ -20,7 +20,7 @@ bme680.initialize().then(async () => {
     console.info('Sensor initialized');
     setInterval(async () => {
     	const data = await bme680.getSensorData();
-		const values = ['now()', process.uptime(), data.data.temperature, data.data.humidity, data.data.gas_resistance, data.data.heat_stable ? 1 : 0];
+		const values = ['date(\'now\')', process.uptime(), data.data.temperature, data.data.humidity, data.data.gas_resistance, data.data.heat_stable ? 1 : 0];
         console.info(values);
 		q.run(values);
         // INSERT INTO conditions(time, location, temperature, humidity) VALUES (NOW(), 'office', 70.0, 50.0);
