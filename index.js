@@ -4,8 +4,7 @@ const { Bme680 } = require('bme680-sensor');
 const bme680 = new Bme680(1, 0x77);
 const sqlite = require('sqlite');
 
-const db = await sqlite.open('./bme.db');
-
+sqlite.open('./bme.db').then(db => {
 await db.run(`CREATE TABLE IF NOT EXISTS conditions (
   time        INTEGER NOT NULL,
   uptime      INTEGER NOT NULL,
@@ -26,4 +25,6 @@ bme680.initialize().then(async () => {
 		q.run(values);
         // INSERT INTO conditions(time, location, temperature, humidity) VALUES (NOW(), 'office', 70.0, 50.0);
     }, 3000);
+});
+
 });
