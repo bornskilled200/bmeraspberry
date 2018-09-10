@@ -14,7 +14,7 @@ await db.run(`CREATE TABLE IF NOT EXISTS conditions (
   stable      INTEGER NOT NULL
 );`);
 
-const q = await db.prepare('INSERT INTO conditions(time, uptime, temperature, humidity, air, stable) values(?, ?, ?, ?, ?)');
+const q = await db.prepare('INSERT INTO conditions(time, uptime, temperature, humidity, air, stable) values(?, ?, ?, ?, ?, ?)');
 
 bme680.initialize().then(async () => {
     console.info('Sensor initialized');
