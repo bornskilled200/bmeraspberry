@@ -5,8 +5,6 @@ const bme680 = new Bme680(1, 0x77);
 const sqlite = require('sqlite');
 var express = require('express');
 var path = require('path');
-var logger = require('morgan');
-
 
 sqlite.open('./bme.db').then(async db => {
 await db.run(`CREATE TABLE IF NOT EXISTS conditions (
