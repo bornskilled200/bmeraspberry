@@ -9,6 +9,24 @@
 <body>
   <h1>Express</h1>
   <p>Welcome to Express</p>
+
+  <script>
+  	const plotDiv = document.getElementById('plot');
+  	fetch('users').then(users => {
+		Plotly.plot(
+			plotDiv,
+			[
+				{
+					x: users.map(user => user.time),
+					y: users.map(user => user.air) 
+				}
+			],
+			{
+				margin: { t: 0 }
+			}
+		);
+  	});
+  </script>
 </body>
 
 </html>
