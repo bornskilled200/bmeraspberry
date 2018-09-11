@@ -6,7 +6,7 @@ const sqlite = require('sqlite');
 var express = require('express');
 var path = require('path');
 
-sqlite.open('./bme.db').then(async db => {
+sqlite.open('./bme.db', { cached: true }).then(async db => {
 await db.run(`CREATE TABLE IF NOT EXISTS conditions (
   time        INTEGER NOT NULL,
   uptime      INTEGER NOT NULL,
