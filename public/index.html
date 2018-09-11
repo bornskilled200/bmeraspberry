@@ -9,23 +9,26 @@
 <body>
   <h1>Express</h1>
   <p>Welcome to Express</p>
+  <div style="width:600px;height:250px;"></div>
 
   <script>
   	const plotDiv = document.getElementById('plot');
-  	fetch('users').then(users => {
-		Plotly.plot(
-			plotDiv,
-			[
+  	fetch('users')
+  		.then(response => response.json())
+  		.then(users => {
+			Plotly.plot(
+				plotDiv,
+				[
+					{
+						x: users.map(user => user.time),
+						y: users.map(user => user.air) 
+					}
+				],
 				{
-					x: users.map(user => user.time),
-					y: users.map(user => user.air) 
+					margin: { t: 0 }
 				}
-			],
-			{
-				margin: { t: 0 }
-			}
-		);
-  	});
+			);
+	  	});
   </script>
 </body>
 
