@@ -24,14 +24,13 @@ const q = await db.prepare('INSERT INTO conditions(time, uptime, temperature, hu
 			const values = [process.uptime(), data.data.temperature, data.data.humidity, data.data.gas_resistance, data.data.heat_stable ? 1 : 0];
 	        console.info(values);
 			q.run(values);
-	        // INSERT INTO conditions(time, location, temperature, humidity) VALUES (NOW(), 'office', 70.0, 50.0);
 	    }, 3000);
 	});
 });
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var conditionsRouter = require('./routes/conditions');
 
 var app = express();
 
@@ -40,6 +39,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/conditions', conditionsRouter);
 
 module.exports = app;
