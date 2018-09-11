@@ -18,16 +18,16 @@
   	const humidityDiv = document.getElementById('humidity');
   	const tempDiv = document.getElementById('temp');
 
-  	fetch('users')
+  	fetch('conditions')
   		.then(response => response.json())
-  		.then(users => {
-  			const x = users.map(user => new Date(user.time * 1000));
+  		.then(conditions => {
+  			const x = conditions.map(condition => new Date(condition.time * 1000));
 			Plotly.plot(
 				airDiv,
 				[
 					{
 						x,
-						y: users.map(user => user.air) 
+						y: conditions.map(condition => condition.air) 
 					}
 				],
 				{
@@ -39,7 +39,7 @@
 				[
 					{
 						x,
-						y: users.map(user => user.humidity) 
+						y: conditions.map(condition => condition.humidity) 
 					}
 				],
 				{
@@ -51,7 +51,7 @@
 				[
 					{
 						x,
-						y: users.map(user => user.temperature) 
+						y: conditions.map(condition => condition.temperature) 
 					}
 				],
 				{
