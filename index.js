@@ -5,6 +5,7 @@ const bme680 = new Bme680(1, 0x77);
 const sqlite = require('sqlite');
 var express = require('express');
 var path = require('path');
+var compression = require('compression')
 
 sqlite.open('./bme.db', { cached: true }).then(async db => {
 await db.run(`CREATE TABLE IF NOT EXISTS conditions (
@@ -34,6 +35,7 @@ var conditionsRouter = require('./routes/conditions');
 
 var app = express();
 
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
