@@ -23,7 +23,8 @@ class BmeCache {
   }
 
   async write(array) {
-    await this.statement.run(array);
+    const statement = await this.statement;
+    await statement.run(array);
 
     if (this.cache) {
       this.cache.unshift(array);
