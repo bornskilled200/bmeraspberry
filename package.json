@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/bornskilled200/bmeraspberry/issues"
   },
-  "homepage": "https://github.com/bornskilled200/bmeraspberry#readme"
+  "homepage": "https://github.com/bornskilled200/bmeraspberry#readme",
+  "optionalDependencies": {
+    "bme680-sensor": "^0.1.6"
+  }
 }
