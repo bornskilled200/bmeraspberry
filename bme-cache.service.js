@@ -27,7 +27,14 @@ class BmeCache {
     await statement.run(array);
 
     if (this.cache) {
-      this.cache.unshift(array);
+      this.cache.unshift({
+        time: array[0],
+        uptime: array[1],
+        temperature: array[2],
+        humidity: array[3],
+        air: array[4],
+        stable: array[5],
+      });
       if (this.cache.length > 500) {
         this.cache.pop();
       }
@@ -46,4 +53,5 @@ class BmeCache {
   }
 }
 
+console.error('gugu')
 module.exports = new BmeCache();
