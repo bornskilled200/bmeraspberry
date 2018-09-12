@@ -27,7 +27,7 @@ class BmeCache {
 
     if (this.cache) {
       this.cache.unshift(array);
-      if (this.cache.length > this.length) {
+      if (this.cache.length > 500) {
         this.cache.pop();
       }
     }
