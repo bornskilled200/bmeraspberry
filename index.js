@@ -19,7 +19,7 @@ if (isPi) {
 
 
 const express = require('express');
-const condition = require('condition');
+const path = require('path');
 const compression = require('compression');
 
 const indexRouter = require('./routes/index');
@@ -30,7 +30,7 @@ const app = express();
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(condition.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/conditions', conditionsRouter);
