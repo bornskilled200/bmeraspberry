@@ -42,16 +42,16 @@ class BmeCache {
   }
 
   async read(length) {
-    if ((length === 500 || !length) && this.cache) {
+    const db = await this.db$;
+    if (length === 500 || !length) {
+      if (!this.cache) {
+        this.cache = await db.all(`SELECT * FROM conditions ORDER BY time DESC limit 500`);
+      }
       return this.cache;
     }
 
-    const db = await this.db$;
-    this.cache = await db.all('SELECT * FROM conditions ORDER BY time DESC limit 500');
-
-    return this.cache;
+    return db.all(`SELECT * FROM conditions ORDER BY time DESC limit ${length}`);
   }
 }
 
-console.error('gugu')
 module.exports = new BmeCache();

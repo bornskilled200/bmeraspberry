@@ -7,6 +7,7 @@
 </head>
 
 <body>
+  <input type="number" value="500" onkeydown="updatePlot(event.target.value)">
   <div id="air" class="plotly-frame"></div>
   <div id="humidity" class="plotly-frame"></div>
   <div id="temp" class="plotly-frame"></div>
@@ -16,59 +17,75 @@
     const humidityDiv = document.getElementById('humidity');
     const tempDiv = document.getElementById('temp');
 
-    fetch('conditions')
-      .then(response => response.json())
-      .then(conditions => {
-        const x = conditions.map(condition => new Date(condition.time * 1000));
-        Plotly.plot(
-          airDiv,
-          [
-            {
-              x,
-              y: conditions.map(condition => condition.air) 
-            }
-          ],
-          {
-            margin: { t: 30 },
-            title: 'Air Quality (Higher is better)',
-            yaxis: {
-              side: 'right',
-            },
-          },
-        );
-        Plotly.plot(
-          humidityDiv,
-          [
-            {
-              x,
-              y: conditions.map(condition => condition.humidity) 
-            }
-          ],
-          {
-            margin: { t: 30 },
-            title: 'Humidity',
-            yaxis: {
-              side: 'right',
-            },
-          }
-        );
-        Plotly.plot(
-          tempDiv,
-          [
-            {
-              x,
-              y: conditions.map(condition => condition.temperature) 
-            }
-          ],
-          {
-            margin: { t: 30 },
-            title: 'Temperature (C)',
-            yaxis: {
-              side: 'right',
-            },
-          }
-        );
-      });
+    Plotly.newPlot(
+      airDiv,
+      [],
+      {
+        margin: { t: 30 },
+        title: 'Air Quality (Higher is better)',
+        yaxis: {
+          side: 'right',
+        },
+      },
+    );
+    Plotly.newPlot(
+      humidityDiv,
+      [],
+      {
+        margin: { t: 30 },
+        title: 'Humidity',
+        yaxis: {
+          side: 'right',
+        },
+      }
+    );
+    Plotly.newPlot(
+      tempDiv,
+      [],
+      {
+        margin: { t: 30 },
+        title: 'Temperature (C)',
+        yaxis: {
+          side: 'right',
+        },
+      }
+    );
+
+    function updatePlot(results) {
+      fetch(`conditions?results=${results}`)
+        .then(response => response.json())
+        .then(conditions => {
+          const x = conditions.map(condition => new Date(condition.time * 1000));
+          Plotly.react(
+            airDiv,
+            [
+              {
+                x,
+                y: conditions.map(condition => condition.air) 
+              },
+            ],
+          );
+          Plotly.react(
+            humidityDiv,
+            [
+              {
+                x,
+                y: conditions.map(condition => condition.humidity) 
+              },
+            ],
+          );
+          Plotly.react(
+            tempDiv,
+            [
+              {
+                x,
+                y: conditions.map(condition => condition.temperature) 
+              },
+            ],
+          );
+        });
+    }
+    updatePlot(500);
   </script>
 </body>
 
