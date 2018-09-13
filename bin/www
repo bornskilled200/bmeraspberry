@@ -5,8 +5,8 @@
  */
 
 var app = require('../index');
-var debug = require('debug')('bme:server');
 var http = require('http');
+var fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
@@ -86,5 +86,6 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
+  fs.writeFile('run.pid', process.pid, () => {});
 }
