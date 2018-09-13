@@ -1,11 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const sqlite = require('sqlite');
 var bmeCache = require('../bme-cache.service');
 
-
-
-/* GET users listing. */
+/* GET conditions listing. */
 router.get('/', function(req, res, next) {
   let results = parseInt(req.query.results);
   if (isNaN(results)) {

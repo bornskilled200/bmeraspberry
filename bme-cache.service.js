@@ -1,5 +1,7 @@
 const sqlite = require('sqlite');
 
+const DEFAULT_LENGTH = 1000;
+
 class BmeCache {
 
   constructor() {
@@ -38,7 +40,7 @@ class BmeCache {
         air: array[4],
         stable: array[5],
       });
-      if (this.cache.length > 500) {
+      if (this.cache.length > DEFAULT_LENGTH) {
         this.cache.pop();
       }
     }
@@ -46,9 +48,9 @@ class BmeCache {
 
   async read(length) {
     const db = await this.db$;
-    if (length === 500 || !length) {
+    if (length === DEFAULT_LENGTH || !length) {
       if (!this.cache) {
-        this.cache = await db.all(`SELECT * FROM conditions ORDER BY time DESC limit 500`);
+        this.cache = await db.all(`SELECT * FROM conditions ORDER BY time DESC limit ${DEFAULT_LENGTH}`);
       }
       return this.cache;
     }

@@ -8,7 +8,7 @@ fi
 
 start ()
 {
-  nohup npm start 2> nohup.err & echo $! > run.pid
+  nohup npm start 2> nohup.err &
 }
 
 stop ()
@@ -31,7 +31,7 @@ case "$1" in
   start)
     start
     ;;
-   
+
   stop)
     stop
     ;;
