@@ -5,14 +5,16 @@ class BmeCache {
   constructor() {
     this.db$ = sqlite.open('./bme.db', { cached: true })
       .then(async db => {
-          await db.run(`CREATE TABLE IF NOT EXISTS conditions (
-            time        INTEGER NOT NULL,
-            uptime      INTEGER NOT NULL,
-            temperature REAL    NOT NULL,
-            humidity    REAL    NOT NULL,
-            air         REAL    NOT NULL,
-            stable      INTEGER NOT NULL
-          );`);
+        await db.run(`CREATE TABLE IF NOT EXISTS conditions (
+          time        INTEGER NOT NULL,
+          uptime      INTEGER NOT NULL,
+          temperature REAL    NOT NULL,
+          humidity    REAL    NOT NULL,
+          air         REAL    NOT NULL,
+          stable      INTEGER NOT NULL
+        );`);
+
+        await db.run('CREATE INDEX IF NOT EXISTS Idx1 ON conditions(time);');
 
         return db;
       });
