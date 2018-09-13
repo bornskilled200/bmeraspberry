@@ -14,7 +14,8 @@ class BmeCache {
           stable      INTEGER NOT NULL
         );`);
 
-        await db.run('CREATE INDEX IF NOT EXISTS Idx1 ON conditions(time);');
+        await db.run('DROP INDEX IF EXISTS Idx1;');
+        await db.run('CREATE INDEX IF NOT EXISTS ix_conditions_time_all ON conditions(time, uptime, temperature, humidity, air, stable);');
 
         return db;
       });
