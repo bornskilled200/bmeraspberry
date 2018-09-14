@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <input type="number" value="1000" oninput="updatePlot(event.target.value)">
+  <input type="number" placeholder="1000" oninput="updatePlot(event.target.value)">
   <div id="air" class="plotly-frame"></div>
   <div id="humidity" class="plotly-frame"></div>
   <div id="temp" class="plotly-frame"></div>
@@ -56,12 +56,30 @@
         .then(response => response.json())
         .then(conditions => {
           const x = conditions.map(condition => new Date(condition.time * 1000));
+          const conditionsR = conditions.slice(0).reverse();
+          let previousMax = [];
           Plotly.react(
             airDiv,
             [
               {
                 x,
-                y: conditions.map(condition => condition.air) 
+                y: conditions.map(condition => condition.air),
+                name: 'Air Quality (Ohms)',
+              },
+              {
+                x,
+                y: conditionsR.map((condition, index) => {
+                  if (previousMax.length && condition.air - previousMax[previousMax.length-1] > 10000) {
+                    // previousMax.push(previousMax[previousMax.length - 1] + (previousMax[previousMax.length - 1] - condition.air) * .1); ignore crazy changes in values
+                  } else {
+                    previousMax.push(condition.air);                    
+                  }
+                  if (previousMax.length > 150) {
+                    previousMax.shift();
+                  }
+                  return previousMax.reduce((accu, next) => next > accu ? next : accu);
+                }).reverse(),
+                name: 'Max',
               },
             ],
             {
@@ -106,7 +124,7 @@
           );
         });
     }
-    updatePlot(1000);
+    updatePlot();
   </script>
 </body>
 
