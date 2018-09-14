@@ -1,6 +1,6 @@
 const sqlite = require('sqlite');
 
-const DEFAULT_LENGTH = 1000;
+const DEFAULT_LENGTH = 5000;
 
 class BmeCache {
 
