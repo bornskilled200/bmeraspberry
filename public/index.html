@@ -52,12 +52,14 @@
     );
 
     function updatePlot(results) {
-      fetch(`conditions?results=${results}`)
+      fetch(`http://192.168.1.37:3000/conditions?results=${results}`)
         .then(response => response.json())
         .then(conditions => {
           const x = conditions.map(condition => new Date(condition.time * 1000));
           const conditionsR = conditions.slice(0).reverse();
           let previousMax = [];
+          let level = conditionsR[0];
+          let trend = conditionsR[1] - conditionsR[0];
           Plotly.react(
             airDiv,
             [
@@ -80,6 +82,18 @@
                   return previousMax.reduce((accu, next) => next > accu ? next : accu);
                 }).reverse(),
                 name: 'Max',
+              },
+              {
+                x,
+                y: conditionsR.map((condition, index) => {
+                  const lastLevel = level;
+                  const value = condition.air;
+                  level = ALPHA * value + (1-ALPHA) * (level + trend);
+                  trend = BETA * (level - lastLevel) + (1 - BETA) * trend;
+
+                  return level + trend;
+                }).reverse(),
+                name: 'Smoothing',
               },
             ],
             {
