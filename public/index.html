@@ -60,6 +60,8 @@
           let previousMax = [];
           let level = conditionsR[0];
           let trend = conditionsR[1] - conditionsR[0];
+          const ALPHA = .6;
+          const BETA = .6;
           Plotly.react(
             airDiv,
             [
