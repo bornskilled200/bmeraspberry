@@ -9,13 +9,9 @@
 <body>
   <input type="number" placeholder="5000" oninput="updatePlot(event.target.value)">
   <div id="air" class="plotly-frame"></div>
-  <div id="humidity" class="plotly-frame"></div>
-  <div id="temp" class="plotly-frame"></div>
 
   <script>
     const airDiv = document.getElementById('air');
-    const humidityDiv = document.getElementById('humidity');
-    const tempDiv = document.getElementById('temp');
 
     Plotly.newPlot(
       airDiv,
@@ -27,28 +23,6 @@
           side: 'right',
         },
       },
-    );
-    Plotly.newPlot(
-      humidityDiv,
-      [],
-      {
-        margin: { t: 30 },
-        title: 'Humidity',
-        yaxis: {
-          side: 'right',
-        },
-      }
-    );
-    Plotly.newPlot(
-      tempDiv,
-      [],
-      {
-        margin: { t: 30 },
-        title: 'Temperature (C)',
-        yaxis: {
-          side: 'right',
-        },
-      }
     );
 
     function updatePlot(results) {
@@ -108,38 +82,6 @@
                 side: 'right',
               },
             },
-          );
-          Plotly.react(
-            humidityDiv,
-            [
-              {
-                x,
-                y: conditions.map(condition => condition.humidity) 
-              },
-            ],
-            {
-              margin: { t: 30 },
-              title: 'Humidity',
-              yaxis: {
-                side: 'right',
-              },
-            }
-          );
-          Plotly.react(
-            tempDiv,
-            [
-              {
-                x,
-                y: conditions.map(condition => condition.temperature) 
-              },
-            ],
-            {
-              margin: { t: 30 },
-              title: 'Temperature (C)',
-              yaxis: {
-                side: 'right',
-              },
-            }
           );
         });
     }
