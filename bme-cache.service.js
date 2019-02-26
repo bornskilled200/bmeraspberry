@@ -32,7 +32,7 @@ class BmeCache {
       this.cache.unshift({
         time: array[0],
         uptime: array[1],
-        air: array[4],
+        air: array[2],
       });
       if (this.cache.length > DEFAULT_LENGTH) {
         this.cache.pop();
