@@ -12,11 +12,13 @@ if (isPi) {
     return Number(stdout);
   }
   console.info('Sensor initialized');
-  setInterval(async () => {
+  const loop = async () => {
     const values = [Date.now() / 1000 | 0, process.uptime(), await getAir()];
     console.info(values);
     bmeCache.write(values);
-  }, 1000 * 15);
+  }
+  loop();
+  setInterval(loop, 1000 * 15);
 }
 
 
