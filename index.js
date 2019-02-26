@@ -18,7 +18,7 @@ if (isPi) {
     bmeCache.write(values);
   }
   loop();
-  setInterval(loop, 1000 * 15);
+  setInterval(loop, 1000 * 60 * 5);
 }
 
 

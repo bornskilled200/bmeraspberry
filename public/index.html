@@ -12,6 +12,23 @@
 
   <script>
     const airDiv = document.getElementById('air');
+    const table = [
+      [0, 12, 0, 50],
+      [12.1, 35.4, 51, 100],
+      [35.5, 55.4, 101, 150],
+      [55.5, 150.4, 151, 200],
+      [150.5, 250.4, 201, 300],
+      [250.5, 350.4, 301, 400],
+      [350.5, 500.4, 401, 500],
+    ];
+    function getAqi(pm25) {
+      for (aqi in table) {
+        if (pm25 < aqi[1]) {
+          return aqi;
+        }
+      }
+      return [];
+    }
 
     Plotly.newPlot(
       airDiv,
@@ -31,7 +48,6 @@
         .then(conditions => {
           const x = conditions.map(condition => new Date(condition.time * 1000));
           const conditionsR = conditions.slice(0).reverse();
-          let previousMax = [];
           let level = conditionsR[0].air;
           let trend = conditionsR[1].air - conditionsR[0].air;
           const ALPHA = .15;
@@ -47,17 +63,10 @@
               {
                 x,
                 y: conditionsR.map((condition, index) => {
-                  if (previousMax.length && condition.air - previousMax[previousMax.length-1] > 10000) {
-                    // previousMax.push(previousMax[previousMax.length - 1] + (previousMax[previousMax.length - 1] - condition.air) * .1); ignore crazy changes in values
-                  } else {
-                    previousMax.push(condition.air);                    
-                  }
-                  if (previousMax.length > 150) {
-                    previousMax.shift();
-                  }
-                  return previousMax.reduce((accu, next) => next > accu ? next : accu);
+                  const [minC, maxC, minI, maxI] = getAqi(condition.air);
+                  return (maxI - minI) / (maxC - minC) * (condtion.air - minC) + minI;
                 }).reverse(),
-                name: 'Max',
+                name: 'US AQI',
               },
               {
                 x,
