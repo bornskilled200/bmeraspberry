@@ -4,7 +4,7 @@ const { promisify } = require('util');
 
 if (isPi) {
   const bmeCache = require('./bme-cache.service');
-  const execFile = util.promisify(require('child_process').execFile);
+  const execFile = promisify(require('child_process').execFile);
 
   async function getAir() {
     await execFile('/usr/local/lib/airpi/pms5003');
