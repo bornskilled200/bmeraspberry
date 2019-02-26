@@ -1,5 +1,6 @@
 'use strict';
 const isPi = process.platform === 'linux'; // VERY NAIVE CHECK
+const { promisify } = require('util');
 
 if (isPi) {
   const bmeCache = require('./bme-cache.service');
