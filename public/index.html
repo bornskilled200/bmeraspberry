@@ -64,7 +64,7 @@
                 x,
                 y: conditionsR.map((condition, index) => {
                   const [minC, maxC, minI, maxI] = getAqi(condition.air);
-                  return (maxI - minI) / (maxC - minC) * (condtion.air - minC) + minI;
+                  return (maxI - minI) / (maxC - minC) * (condition.air - minC) + minI;
                 }).reverse(),
                 name: 'US AQI',
               },
