@@ -5,25 +5,22 @@ const DEFAULT_LENGTH = 5000;
 class BmeCache {
 
   constructor() {
-    this.db$ = sqlite.open('./bme.db', { cached: true })
+    this.db$ = sqlite.open('./bme2.db', { cached: true })
       .then(async db => {
         await db.run(`CREATE TABLE IF NOT EXISTS conditions (
           time        INTEGER NOT NULL,
           uptime      INTEGER NOT NULL,
-          temperature REAL    NOT NULL,
-          humidity    REAL    NOT NULL,
-          air         REAL    NOT NULL,
-          stable      INTEGER NOT NULL
+          air         REAL    NOT NULL
         );`);
 
         await db.run('DROP INDEX IF EXISTS Idx1;');
-        await db.run('CREATE INDEX IF NOT EXISTS ix_conditions_time_all ON conditions(time, uptime, temperature, humidity, air, stable);');
+        await db.run('CREATE INDEX IF NOT EXISTS ix_conditions_time_all ON conditions(time, uptime, temperature, humidity, air);');
 
         return db;
       });
 
     this.statement = this.db$.then(db => {
-      return db.prepare('INSERT INTO conditions(time, uptime, temperature, humidity, air, stable) values(?, ?, ?, ?, ?, ?)');
+      return db.prepare('INSERT INTO conditions(time, uptime, air) values(?, ?, ?)');
     });
   }
 
@@ -35,10 +32,7 @@ class BmeCache {
       this.cache.unshift({
         time: array[0],
         uptime: array[1],
-        temperature: array[2],
-        humidity: array[3],
         air: array[4],
-        stable: array[5],
       });
       if (this.cache.length > DEFAULT_LENGTH) {
         this.cache.pop();
