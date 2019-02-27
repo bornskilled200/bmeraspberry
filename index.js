@@ -8,12 +8,17 @@ if (isPi) {
 
   async function getAir() {
     await execFile('/usr/local/lib/airpi/pms5003');
-    const { stdout } = await execFile('/usr/local/lib/airpi/pms5003', ['pm2.5']);
-    return Number(stdout);
+    const { stdout } = await execFile('/usr/local/lib/airpi/pms5003-snmp', ['pm2.5']);
+    return stdout && Number(stdout);
   }
   console.info('Sensor initialized');
   const loop = async () => {
-    const values = [Date.now() / 1000 | 0, process.uptime(), await getAir()];
+    const air = await getAir();
+    if (air === false) {
+      console.info('ignoring empty stdout', air);
+      return;
+    }
+    const values = [Date.now() / 1000 | 0, process.uptime(), ];
     console.info(values);
     bmeCache.write(values);
   }

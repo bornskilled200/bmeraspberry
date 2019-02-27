@@ -22,7 +22,7 @@
       [350.5, 500.4, 401, 500],
     ];
     function getAqi(pm25) {
-      for (aqi in table) {
+      for (aqi of table) {
         if (pm25 < aqi[1]) {
           return aqi;
         }
