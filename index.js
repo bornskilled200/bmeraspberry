@@ -18,7 +18,7 @@ if (isPi) {
       console.info('ignoring empty stdout', air);
       return;
     }
-    const values = [Date.now() / 1000 | 0, process.uptime(), ];
+    const values = [Date.now() / 1000 | 0, process.uptime(), air];
     console.info(values);
     bmeCache.write(values);
   }
